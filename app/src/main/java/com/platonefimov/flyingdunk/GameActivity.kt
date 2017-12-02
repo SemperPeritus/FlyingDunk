@@ -1,5 +1,6 @@
 package com.platonefimov.flyingdunk
 
+import android.graphics.Point
 import android.os.Build
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -9,7 +10,12 @@ class GameActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_game)
+
+        val size = Point()
+        windowManager.defaultDisplay.getSize(size)
+
+        val gameView = GameView(this, size.x, size.y)
+        setContentView(gameView)
 
         // Fullscreen parameters
         var uiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
