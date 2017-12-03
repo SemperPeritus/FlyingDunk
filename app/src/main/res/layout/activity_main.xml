@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
-    tools:context="com.platonefimov.flyingdunk.MainActivity">
+    tools:context=".MainActivity">
 
     <Button
         android:id="@+id/playButton"
@@ -13,7 +13,6 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="32dp"
-        android:text="@string/play"
-        tools:ignore="MissingConstraints" />
+        android:text="@string/play" />
 
 </RelativeLayout>
