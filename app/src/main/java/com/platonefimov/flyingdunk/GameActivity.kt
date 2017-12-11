@@ -16,7 +16,7 @@ class GameActivity : AppCompatActivity() {
         val size = Point()
         windowManager.defaultDisplay.getSize(size)
 
-        val gameView = GameView(this, size.x, size.y)
+        gameView = GameView(this, size.x, size.y)
         setContentView(gameView)
 
         // Fullscreen parameters for all Android versions
