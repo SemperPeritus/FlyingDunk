@@ -2,8 +2,10 @@ package com.platonefimov.flyingdunk
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Paint
 import android.os.HandlerThread
-import android.util.Log
 import android.view.SurfaceView
 
 @SuppressLint("ViewConstructor")
@@ -13,6 +15,9 @@ class GameView(context: Context, private val screenX: Int, private val screenY: 
     private var playing = true
     private var gameThread: Thread? = null
     private val fps = 60f
+
+    private var canvas = Canvas()
+    private val paint = Paint()
 
     fun pause() {
         playing = false
@@ -37,7 +42,6 @@ class GameView(context: Context, private val screenX: Int, private val screenY: 
             val delta = System.currentTimeMillis() - beginTime
             if (delta < 1000f / fps)
                 HandlerThread.sleep((1000f / fps).toLong() - delta)
-            Log.v(javaClass.name, beginTime.toString())
         }
     }
 
@@ -45,5 +49,16 @@ class GameView(context: Context, private val screenX: Int, private val screenY: 
     }
 
     private fun draw() {
+        if (holder.surface.isValid) {
+            canvas = holder.lockCanvas()
+
+            canvas.drawColor(Color.argb(255, 0, 0, 0))
+
+            paint.color = Color.argb(255, 255, 0, 0)
+
+            canvas.drawCircle(200f, 500f, 100f, paint)
+
+            holder.unlockCanvasAndPost(canvas)
+        }
     }
 }
