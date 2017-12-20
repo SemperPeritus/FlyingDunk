@@ -16,8 +16,8 @@ class Player(context: Context, screenY: Int) {
     val bitmap: Bitmap = BitmapFactory.decodeResource(context.resources, R.drawable.ball)
 
     private val horizontalSpeed = 1f
-    var goingUp = true
-    private val verticalAcceleration = 2f
+    var goingUp = false
+    private val verticalAcceleration = 0.2f
     private val maxVerticalSpeed = 5f
     private var verticalSpeed = 0f
 
@@ -30,12 +30,13 @@ class Player(context: Context, screenY: Int) {
         else
             verticalSpeed -= verticalAcceleration
 
-        verticalSpeed = if (verticalSpeed > 0)
-            min(verticalAcceleration, maxVerticalSpeed)
-        else
-            max(verticalSpeed, -maxVerticalSpeed)
+        if (verticalSpeed > 0) {
+            if (verticalSpeed > maxVerticalSpeed)
+                verticalSpeed = maxVerticalSpeed
+        } else
+            verticalSpeed = max(verticalSpeed, -maxVerticalSpeed)
 
         x += horizontalSpeed
-        y += verticalSpeed
+        y -= verticalSpeed
     }
 }

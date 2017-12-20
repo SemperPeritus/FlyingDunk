@@ -2,10 +2,9 @@ package com.platonefimov.flyingdunk
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
+import android.graphics.*
 import android.os.HandlerThread
+import android.view.MotionEvent
 import android.view.SurfaceView
 
 @SuppressLint("ViewConstructor")
@@ -18,6 +17,11 @@ class GameView(context: Context, private val screenX: Int, private val screenY: 
 
     private var canvas = Canvas()
     private val paint = Paint()
+
+    private val background: Bitmap = BitmapFactory.decodeResource(context.resources,
+            R.drawable.background)
+
+    private val player = Player(context, screenY)
 
     fun pause() {
         playing = false
@@ -46,6 +50,7 @@ class GameView(context: Context, private val screenX: Int, private val screenY: 
     }
 
     private fun update() {
+        player.update()
     }
 
     private fun draw() {
@@ -53,14 +58,29 @@ class GameView(context: Context, private val screenX: Int, private val screenY: 
             // Lock a canvas
             canvas = holder.lockCanvas()
 
-            canvas.drawColor(Color.argb(255, 0, 0, 0))
+            // Clear canvas
+            canvas.drawBitmap(background, 0f, 0f, paint)
 
-            paint.color = Color.argb(255, 255, 0, 0)
-
-            canvas.drawCircle(200f, 500f, 100f, paint)
+            canvas.drawBitmap(player.bitmap, player.x, player.y, paint)
 
             // Unlock the canvas
             holder.unlockCanvasAndPost(canvas)
         }
+    }
+
+    override fun onTouchEvent(event: MotionEvent): Boolean {
+        performClick()
+
+        when (event.action) {
+            MotionEvent.ACTION_UP -> player.goingUp = false
+            MotionEvent.ACTION_DOWN -> player.goingUp = true
+        }
+
+        return true
+    }
+
+    override fun performClick(): Boolean {
+        super.performClick()
+        return true
     }
 }
