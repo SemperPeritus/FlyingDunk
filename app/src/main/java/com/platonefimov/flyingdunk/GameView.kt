@@ -50,6 +50,7 @@ class GameView(context: Context, private val screenX: Int, private val screenY: 
 
     private fun draw() {
         if (holder.surface.isValid) {
+            // Lock a canvas
             canvas = holder.lockCanvas()
 
             canvas.drawColor(Color.argb(255, 0, 0, 0))
@@ -58,6 +59,7 @@ class GameView(context: Context, private val screenX: Int, private val screenY: 
 
             canvas.drawCircle(200f, 500f, 100f, paint)
 
+            // Unlock the canvas
             holder.unlockCanvasAndPost(canvas)
         }
     }
