@@ -70,7 +70,10 @@ class GameView(context: Context) : SurfaceView(context), Runnable {
             paint.isFilterBitmap = true
             canvas.drawBitmap(background, null, screen, paint)
 
-            canvas.drawBitmap(player.bitmap, player.x, player.y, paint)
+            canvas.drawBitmap(player.bitmap, null,
+                    RectF(player.x, player.y,
+                            player.x + player.width, player.y + player.height),
+                    paint)
 
             // Unlock the canvas
             holder.unlockCanvasAndPost(canvas)

@@ -11,8 +11,12 @@ class Player(context: Context) {
         private set
     var y = 50f
         private set
+    var width = 216f
+        private set
+    var height = 216f
+        private set
 
-    private var screenY: Int = 720
+    private var screenY: Int = 1080
 
     val bitmap: Bitmap = BitmapFactory.decodeResource(context.resources, R.drawable.ball)
 
@@ -24,6 +28,8 @@ class Player(context: Context) {
 
     fun scale(screenY: Int) {
         this.screenY = screenY
+        width = screenY * 0.20f
+        height = width
     }
 
     fun update() {
@@ -41,8 +47,8 @@ class Player(context: Context) {
         x += horizontalSpeed
         y -= verticalSpeed
 
-        if (y > screenY - bitmap.height) {
-            y = (screenY - bitmap.height).toFloat()
+        if (y > screenY - height) {
+            y = screenY - height
             verticalSpeed = 0f
         }
         if (y < 0) {
