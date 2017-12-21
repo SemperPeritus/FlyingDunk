@@ -8,8 +8,9 @@ import android.view.MotionEvent
 import android.view.SurfaceView
 
 @SuppressLint("ViewConstructor")
-class GameView(context: Context, private val screenX: Int, private val screenY: Int) :
-        SurfaceView(context), Runnable {
+class GameView(context: Context) : SurfaceView(context), Runnable {
+
+    private var screen = Rect()
 
     private var playing = true
     private var gameThread: Thread? = null
@@ -21,7 +22,14 @@ class GameView(context: Context, private val screenX: Int, private val screenY: 
     private val background: Bitmap = BitmapFactory.decodeResource(context.resources,
             R.drawable.background)
 
-    private val player = Player(context, screenY)
+    private var player = Player(context)
+
+    override fun onCreateDrawableState(extraSpace: Int): IntArray {
+        screen = Rect(0, 0, width, height)
+        player.scale(height)
+
+        return super.onCreateDrawableState(extraSpace)
+    }
 
     fun pause() {
         playing = false
@@ -59,7 +67,8 @@ class GameView(context: Context, private val screenX: Int, private val screenY: 
             canvas = holder.lockCanvas()
 
             // Clear canvas
-            canvas.drawBitmap(background, 0f, 0f, paint)
+            paint.isFilterBitmap = true
+            canvas.drawBitmap(background, null, screen, paint)
 
             canvas.drawBitmap(player.bitmap, player.x, player.y, paint)
 

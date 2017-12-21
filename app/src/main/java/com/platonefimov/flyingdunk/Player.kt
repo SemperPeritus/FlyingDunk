@@ -4,14 +4,15 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import kotlin.math.max
-import kotlin.math.min
 
-class Player(context: Context, screenY: Int) {
+class Player(context: Context) {
 
     var x = 50f
         private set
     var y = 50f
         private set
+
+    private var screenY: Int = 720
 
     val bitmap: Bitmap = BitmapFactory.decodeResource(context.resources, R.drawable.ball)
 
@@ -21,8 +22,9 @@ class Player(context: Context, screenY: Int) {
     private val maxVerticalSpeed = 5f
     private var verticalSpeed = 0f
 
-    private val maxY = screenY - bitmap.height
-    private val minX = 0
+    fun scale(screenY: Int) {
+        this.screenY = screenY
+    }
 
     fun update() {
         if (goingUp)
@@ -38,5 +40,14 @@ class Player(context: Context, screenY: Int) {
 
         x += horizontalSpeed
         y -= verticalSpeed
+
+        if (y > screenY - bitmap.height) {
+            y = (screenY - bitmap.height).toFloat()
+            verticalSpeed = 0f
+        }
+        if (y < 0) {
+            y = 0f
+            verticalSpeed = 0f
+        }
     }
 }
