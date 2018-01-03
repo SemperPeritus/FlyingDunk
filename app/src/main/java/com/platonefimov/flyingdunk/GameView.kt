@@ -49,8 +49,11 @@ class GameView(context: Context) : SurfaceView(context), Runnable {
     override fun run() {
         while (playing) {
             val beginTime = System.currentTimeMillis()
+
             update()
             draw()
+
+            // Sleep a little if rendered too fast
             val delta = System.currentTimeMillis() - beginTime
             if (delta < 1000f / fps)
                 HandlerThread.sleep((1000f / fps).toLong() - delta)

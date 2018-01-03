@@ -3,7 +3,7 @@ package com.platonefimov.flyingdunk
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import kotlin.math.max
+import java.lang.Math.max
 
 class Player(context: Context) {
 
@@ -34,9 +34,9 @@ class Player(context: Context) {
 
     fun update() {
         if (goingUp)
-            verticalSpeed += verticalAcceleration
-        else
             verticalSpeed -= verticalAcceleration
+        else
+            verticalSpeed += verticalAcceleration
 
         if (verticalSpeed > 0) {
             if (verticalSpeed > maxVerticalSpeed)
@@ -45,7 +45,7 @@ class Player(context: Context) {
             verticalSpeed = max(verticalSpeed, -maxVerticalSpeed)
 
         x += horizontalSpeed
-        y -= verticalSpeed
+        y += verticalSpeed
 
         if (y > screenY - height) {
             y = screenY - height
